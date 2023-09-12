@@ -1,0 +1,41 @@
+<body>
+  <div align="center">
+    <form #formulario="ngForm" (ngSubmit)="enviarFormulario()" class="form" align="center">
+      <h1>Cadastro de Usuário</h1>
+      <div class="form-group">
+        <label for="nome">Nome:</label><br>
+        <input type="text" placeholder="Insira o Seu Nome" id="nome" name="nome" [(ngModel)]="dadosFormulario.nome" required>
+        <div *ngIf="formulario.controls['nome'].hasError('required') && (formulario.controls['nome'].dirty || formulario.controls['nome'].touched)">
+          <div class="alert alert-danger">O Campo Nome é obrigatório.</div>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" placeholder="Insira o Seu E-mail" name="email" [(ngModel)]="dadosFormulario.email" required email>
+        <div *ngIf="formulario.controls['email'].hasError('required') && (formulario.controls['email'].dirty || formulario.controls['email'].touched)">
+          <div class="alert alert-danger">O Campo Email é obrigatório.</div>
+        </div>
+        <div *ngIf="formulario.controls['email'].hasError('email') && (formulario.controls['email'].dirty || formulario.controls['email'].touched)">
+          <div class="alert alert-danger">Email deve ser um endereço de e-mail válido.</div>
+        </div>
+      </div>
+      <br>
+      <button type="submit" [disabled]="formulario.invalid">Enviar</button>
+    </form>
+
+    <div *ngIf="formularioEnviado">
+      <h2>Dados do Formulário:</h2>
+      <table>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+        </tr>
+        <tr *ngFor="let dado of listaDeDados">
+          <td>{{ dado.nome }}</td>
+          <td>{{ dado.email }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</body>
